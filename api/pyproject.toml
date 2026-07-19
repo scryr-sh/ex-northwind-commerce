@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "northwind-api"
+version = "0.1.0"
+description = "FastAPI service for the Northwind Commerce sample"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.6",
+  "uvicorn[standard]>=0.34.0",
+  "pydantic-settings>=2.7.0",
+  "psycopg[binary]>=3.2.3",
+  "redis>=5.2.1",
+  "stripe>=11.4.1"
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.28.1",
+  "pytest>=8.3.4",
+  "pytest-cov>=6.0.0"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["northwind_api*"]

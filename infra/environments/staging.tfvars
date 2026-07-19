@@ -1,0 +1,6 @@
+environment = "staging"
+region = "us-central1"
+web_image = "ghcr.io/example/northwind-web:staging"
+api_image = "ghcr.io/example/northwind-api:staging"
+postgres_size = "small"
+redis_size = "small"

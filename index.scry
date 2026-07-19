@@ -1,0 +1,39 @@
+app "northwind-commerce" {
+  description = "Modern B2B storefront sample for web/API/database/payment workflows"
+
+  manifest "northwind-web" {
+    type = "frontend"
+    runtime = "react-vite"
+    path = "web"
+    depends_on = ["northwind-api"]
+    env = ["VITE_API_URL"]
+  }
+
+  manifest "northwind-api" {
+    type = "service"
+    runtime = "fastapi"
+    path = "api"
+    depends_on = ["northwind-postgres", "northwind-redis", "stripe-integration"]
+    env = ["DATABASE_URL", "REDIS_URL", "STRIPE_SECRET_KEY", "CORS_ORIGINS"]
+  }
+
+  manifest "northwind-postgres" {
+    type = "database"
+    engine = "postgres"
+    version = "16"
+    migrations = "api/migrations"
+  }
+
+  manifest "northwind-redis" {
+    type = "cache"
+    engine = "redis"
+    version = "7"
+  }
+
+  manifest "stripe-integration" {
+    type = "payment"
+    provider = "stripe"
+    mode = "test"
+    risk_controls = ["order_velocity", "high_value_purchase", "expedited_shipping"]
+  }
+}

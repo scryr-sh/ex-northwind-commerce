@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  promote:
+    name: Promote
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select environment
+        run: echo "tfvars=infra/environments/${{ inputs.environment }}.tfvars" >> "$GITHUB_OUTPUT"
+        id: env
+      - name: Terraform plan stub
+        run: |
+          echo "terraform init"
+          echo "terraform plan -var-file=${{ steps.env.outputs.tfvars }}"
+      - name: Promote release stub
+        run: |
+          echo "Promoting northwind-web and northwind-api to ${{ inputs.environment }}"
+          echo "A real workflow would publish images, apply Terraform, and run smoke tests."

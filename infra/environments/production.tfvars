@@ -1,0 +1,6 @@
+environment = "production"
+region = "us-central1"
+web_image = "ghcr.io/example/northwind-web:production"
+api_image = "ghcr.io/example/northwind-api:production"
+postgres_size = "medium"
+redis_size = "medium"
